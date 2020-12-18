@@ -1,5 +1,12 @@
 # SampleAddon
 
+## General Notes:
+
+The instructions here which reference a `runSetup.bat` are intended for use with Eclipse, if you use something else, the Readme.txt might help with setup instructions.
+
+## Setting up.
+
+See the Readme.txt for the official Forge instructions on setting up a development environment. The build.gradle included here is configured to also include adding pokecube-aio to the dependencies for the setup.
 
 ## Updating the pokecube dependancy version.
 

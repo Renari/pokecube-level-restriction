@@ -10,6 +10,7 @@ See the Readme.txt for the official Forge instructions on setting up a developme
 
 ## Updating the pokecube dependancy version.
 
+Note, these steps are only needed if the default settings fail to work. By default, it should install the latest release version of pokecube into the development environment when the `runSetup.bat` is executed.
 
 ### Step 1: Obtaining the updated deobf jar
 First you must obtain the updated deobf jar, there are 2 ways to do this, listed below. Once the jar is obtained, place it in the libs directory in your repository.

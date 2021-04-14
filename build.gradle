@@ -9,7 +9,7 @@ buildscript {
         maven {url='https://repo.spongepowered.org/repository/maven-public/'}
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
@@ -31,7 +31,7 @@ archivesBaseName = "${compile_name}"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: "${version_mappings}"
+    mappings channel: 'official', version: "${version_mappings}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     
     runs {

@@ -64,8 +64,10 @@ minecraft {
 
 repositories {
     maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven/"
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
     }
     flatDir {
         dirs 'libs'
@@ -79,7 +81,7 @@ dependencies {
     // implementation "libs:pokecube-aio-1.16.4-3.1.2-deobf"
     
     // If the above line is uncommented, the below should be commented out.
-    implementation "pokecube-aoi:pokecube-aio:release:deobf"
+    implementation fg.deobf("curse.maven:pokecube-aoi-285121:3237402")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

@@ -1,0 +1,114 @@
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+        flatDir {
+          dirs 'libs'
+        }
+        maven {url='https://dist.creeper.host/Sponge/maven'}
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+ext {
+    VERSION_COMPILE = "${version_compile}"
+    // Force a refresh of the toml file
+    cleanTOML()
+}
+
+version = "${version_minecraft}-${VERSION_COMPILE}"
+group = '${compile_group}'
+archivesBaseName = "${compile_name}"
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+minecraft {
+    mappings channel: 'snapshot', version: "${version_mappings}"
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    
+    runs {
+        client = {
+            // recommended logging level for the console
+            properties 'forge.logging.console.level': 'debug'
+            properties '-XX': '+UnlockCommercialFeatures'
+            properties '-XX': '+FlightRecorder'
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run').canonicalPath
+            source sourceSets.main
+        }
+        server = {
+            // recommended logging level for the console
+            properties 'forge.logging.console.level': 'debug'
+            properties '-XX': '+UnlockCommercialFeatures'
+            properties '-XX': '+FlightRecorder'
+            workingDirectory project.file('run').canonicalPath
+            source sourceSets.main
+        }
+        data = {
+            workingDirectory project.file('run').canonicalPath
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', '${mod_id}', '--all', '--output', file('src/generated/resources/'), '--existing', sourceSets.main.resources.srcDirs[0]
+            source sourceSets.main
+        }
+    }
+}
+
+repositories {
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${version_minecraft}-${version_forge}"
+
+    // The below line can be uncommented and adjusted if you provide the jar via /libs
+    // implementation "libs:pokecube-aio-1.16.4-3.1.2-deobf"
+    
+    // If the above line is uncommented, the below should be commented out.
+    implementation "pokecube-aoi:pokecube-aio:release:deobf"
+}
+
+// Example for how to get properties into the manifest for reading by the runtime..
+jar {
+    manifest {
+        attributes([
+            "FMLAT": "accesstransformer.cfg",
+            "Specification-Title": "${compile_name}",
+            "Specification-Vendor": "${author_name}",
+            "Specification-Version": VERSION_COMPILE,
+            "Implementation-Title": project.name,
+            "Implementation-Version": VERSION_COMPILE,
+            "Implementation-Vendor" :"${author_name}",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+processResources.doLast {
+    def TOMLFILE = "./build/resources/main/META-INF/mods.toml"
+    replaceParameters(TOMLFILE, "version_pc", "${version_pcsupport}")
+    replaceParameters(TOMLFILE, "version_mc", "${version_mcsupport}")
+}
+
+def replaceParameters(filename, find, replace) {
+    ant.replace(file:filename,token:find,value:replace)
+}
+
+def cleanTOML()
+{
+    delete "./build/resources/main/META-INF/mods.toml" 
+}

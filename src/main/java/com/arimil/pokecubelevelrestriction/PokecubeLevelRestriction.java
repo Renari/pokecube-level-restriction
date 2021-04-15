@@ -15,7 +15,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import pokecube.core.PokecubeCore;
+import pokecube.core.events.StarterEvent;
 import pokecube.core.events.pokemob.CaptureEvent;
+import pokecube.core.events.pokemob.LevelUpEvent;
+import pokecube.core.handlers.PokecubePlayerDataHandler;
 import pokecube.core.handlers.playerdata.PlayerPokemobCache;
 import pokecube.core.interfaces.IPokemob;
 import pokecube.core.interfaces.capabilities.CapabilityPokemob;
@@ -29,6 +32,7 @@ public class PokecubeLevelRestriction
 {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
+    public static final String HIGHEST_LEVEL_KEY = "_highest_pokemob_level";
 
     public PokecubeLevelRestriction() {
         // Register ourselves for server and other game events we are interested in
@@ -48,16 +52,7 @@ public class PokecubeLevelRestriction
         if (catcher instanceof PlayerEntity) {
             final PlayerEntity player = (PlayerEntity) catcher;
             final PlayerPokemobCache pokemobCache = PlayerDataHandler.getInstance().getPlayerData(player.getUUID()).getData(PlayerPokemobCache.class);
-            int maxLevelOwned = 0;
-            for (final Map.Entry<Integer, ItemStack> entry : pokemobCache.cache.entrySet()) {
-                final ItemStack stack = entry.getValue();
-                final Entity mob = PokecubeManager.itemToMob(stack, catcher.level);
-                if (mob == null) continue;
-                final IPokemob pokemob = CapabilityPokemob.getPokemobFor(mob);
-                if (pokemob.getLevel() > maxLevelOwned) {
-                    maxLevelOwned = pokemob.getLevel();
-                }
-            }
+            int maxLevelOwned = PokecubePlayerDataHandler.getCustomDataTag(player).getInt(HIGHEST_LEVEL_KEY);
             int levelDifference = evt.caught.getLevel() - maxLevelOwned;
             boolean failed = levelDifference > 0 && (levelDifference >= 10 || !((Math.random() * 10) > levelDifference));
             if (failed) {
@@ -65,6 +60,39 @@ public class PokecubeLevelRestriction
                 evt.pokecube.kill();
                 evt.setCanceled(true);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void captureEvent(CaptureEvent.Post evt) {
+        final Entity catcher = ((EntityPokecube) evt.pokecube).shootingEntity;
+        if (catcher instanceof PlayerEntity) {
+            final PlayerEntity player = (PlayerEntity) catcher;
+            final int level = evt.caught.getLevel();
+            if (level > PokecubePlayerDataHandler.getCustomDataTag(player).getInt(HIGHEST_LEVEL_KEY)) {
+                PokecubePlayerDataHandler.getCustomDataTag(player).putInt(HIGHEST_LEVEL_KEY, level);
+                PokecubePlayerDataHandler.saveCustomData(player);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void levelUpEvent(LevelUpEvent evt) {
+        if (evt.mob.getOwner() != null && evt.mob.getOwner() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity)evt.mob.getOwner();
+            if (evt.newLevel > PokecubePlayerDataHandler.getCustomDataTag(player).getInt(HIGHEST_LEVEL_KEY)) {
+                PokecubePlayerDataHandler.getCustomDataTag(player).putInt(HIGHEST_LEVEL_KEY, evt.newLevel);
+                PokecubePlayerDataHandler.saveCustomData(player);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void StarterEvent(StarterEvent evt) {
+        // starters start at level 5
+        if (5 > PokecubePlayerDataHandler.getCustomDataTag(evt.player).getInt(HIGHEST_LEVEL_KEY)) {
+            PokecubePlayerDataHandler.getCustomDataTag(evt.player).putInt(HIGHEST_LEVEL_KEY, 5);
+            PokecubePlayerDataHandler.saveCustomData(evt.player);
         }
     }
 }

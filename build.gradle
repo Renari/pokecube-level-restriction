@@ -6,10 +6,10 @@ buildscript {
         flatDir {
           dirs 'libs'
         }
-        maven {url='https://dist.creeper.host/Sponge/maven'}
+        maven {url='https://repo.spongepowered.org/repository/maven-public/'}
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
@@ -31,7 +31,7 @@ archivesBaseName = "${compile_name}"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: "${version_mappings}"
+    mappings channel: "${channel_mappings}", version: "${version_mappings}"
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     
     runs {
@@ -41,6 +41,8 @@ minecraft {
             properties '-XX': '+UnlockCommercialFeatures'
             properties '-XX': '+FlightRecorder'
             properties 'forge.logging.console.level': 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
             workingDirectory project.file('run').canonicalPath
             source sourceSets.main
         }
@@ -49,6 +51,8 @@ minecraft {
             properties 'forge.logging.console.level': 'debug'
             properties '-XX': '+UnlockCommercialFeatures'
             properties '-XX': '+FlightRecorder'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
             workingDirectory project.file('run').canonicalPath
             source sourceSets.main
         }
@@ -76,10 +80,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${version_minecraft}-${version_forge}"
 
     // The below line can be uncommented and adjusted if you provide the jar via /libs
-    // implementation "libs:pokecube-aio-1.16.4-3.1.2-deobf"
-    
-    // If the above line is uncommented, the below should be commented out.
-    implementation "pokecube-aoi:pokecube-aio:release:deobf"
+    implementation "blank:pokecube-aio-${version_pokecube}-deobf"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

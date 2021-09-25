@@ -81,7 +81,7 @@ dependencies {
     // implementation "libs:pokecube-aio-1.16.4-3.1.2-deobf"
     
     // If the above line is uncommented, the below should be commented out.
-    implementation "curse.maven:pokecube-aoi-285121:3237408"
+    implementation "curse.maven:pokecube-aoi-285121:3470568"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

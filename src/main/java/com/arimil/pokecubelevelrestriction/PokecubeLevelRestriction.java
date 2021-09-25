@@ -1,29 +1,22 @@
 package com.arimil.pokecubelevelrestriction;
 
-import java.util.Map;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.StringTextComponent;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import pokecube.core.PokecubeCore;
 import pokecube.core.events.StarterEvent;
 import pokecube.core.events.pokemob.CaptureEvent;
 import pokecube.core.events.pokemob.LevelUpEvent;
 import pokecube.core.handlers.PokecubePlayerDataHandler;
 import pokecube.core.handlers.playerdata.PlayerPokemobCache;
-import pokecube.core.interfaces.IPokemob;
-import pokecube.core.interfaces.capabilities.CapabilityPokemob;
 import pokecube.core.items.pokecubes.EntityPokecube;
-import pokecube.core.items.pokecubes.PokecubeManager;
 import thut.core.common.handlers.PlayerDataHandler;
 
 // The value here should match an entry in the META-INF/mods.toml file

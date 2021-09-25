@@ -53,7 +53,7 @@ public class PokecubeLevelRestriction
             final PlayerEntity player = (PlayerEntity) catcher;
             final PlayerPokemobCache pokemobCache = PlayerDataHandler.getInstance().getPlayerData(player.getUUID()).getData(PlayerPokemobCache.class);
             int maxLevelOwned = PokecubePlayerDataHandler.getCustomDataTag(player).getInt(HIGHEST_LEVEL_KEY);
-            int levelDifference = evt.caught.getLevel() - maxLevelOwned;
+            int levelDifference = evt.getCaught().getLevel() - maxLevelOwned;
             boolean failed = levelDifference > 0 && (levelDifference >= 10 || !((Math.random() * 10) > levelDifference));
             if (failed) {
                 player.sendMessage(new StringTextComponent("They seem too strong to capture, they broke out!!!"), Util.NIL_UUID);
@@ -68,7 +68,7 @@ public class PokecubeLevelRestriction
         final Entity catcher = ((EntityPokecube) evt.pokecube).shootingEntity;
         if (catcher instanceof PlayerEntity) {
             final PlayerEntity player = (PlayerEntity) catcher;
-            final int level = evt.caught.getLevel();
+            final int level = evt.getCaught().getLevel();
             if (level > PokecubePlayerDataHandler.getCustomDataTag(player).getInt(HIGHEST_LEVEL_KEY)) {
                 PokecubePlayerDataHandler.getCustomDataTag(player).putInt(HIGHEST_LEVEL_KEY, level);
                 PokecubePlayerDataHandler.saveCustomData(player);

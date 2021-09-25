@@ -15,9 +15,7 @@ import pokecube.core.events.StarterEvent;
 import pokecube.core.events.pokemob.CaptureEvent;
 import pokecube.core.events.pokemob.LevelUpEvent;
 import pokecube.core.handlers.PokecubePlayerDataHandler;
-import pokecube.core.handlers.playerdata.PlayerPokemobCache;
 import pokecube.core.items.pokecubes.EntityPokecube;
-import thut.core.common.handlers.PlayerDataHandler;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("pokecubelevelrestriction")
@@ -44,7 +42,6 @@ public class PokecubeLevelRestriction
         final Entity catcher = ((EntityPokecube) evt.pokecube).shootingEntity;
         if (catcher instanceof PlayerEntity) {
             final PlayerEntity player = (PlayerEntity) catcher;
-            final PlayerPokemobCache pokemobCache = PlayerDataHandler.getInstance().getPlayerData(player.getUUID()).getData(PlayerPokemobCache.class);
             int maxLevelOwned = PokecubePlayerDataHandler.getCustomDataTag(player).getInt(HIGHEST_LEVEL_KEY);
             int levelDifference = evt.getCaught().getLevel() - maxLevelOwned;
             boolean failed = levelDifference > 0 && (levelDifference >= 10 || !((Math.random() * 10) > levelDifference));

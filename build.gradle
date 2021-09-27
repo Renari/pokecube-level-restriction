@@ -85,7 +85,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${version_minecraft}-${version_forge}"
 
     // The below line can be uncommented and adjusted if you provide the jar via /libs
-    implementation "blank:pokecube-aio-${version_pokecube}-deobf"
+    implementation fg.deobf("blank:pokecube-aio-${version_pokecube}:jar")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

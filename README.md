@@ -1,4 +1,4 @@
-# SampleAddon
+# Pokecube Level Restriction
 
 ## General Notes:
 

@@ -23,6 +23,9 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
+eclipseJdtApt.enabled = false
+eclipseFactoryPath.enabled = false
+
 ext {
     VERSION_COMPILE = "${version_compile}"
     // Force a refresh of the toml file
@@ -33,7 +36,7 @@ version = "${version_minecraft}-${VERSION_COMPILE}"
 group = '${compile_group}'
 archivesBaseName = "${compile_name}"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     mappings channel: "${channel_mappings}", version: "${version_mappings}"
@@ -73,8 +76,10 @@ minecraft {
 
 repositories {
     maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven/"
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
     }
     flatDir {
         dirs 'libs'
@@ -84,8 +89,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${version_minecraft}-${version_forge}"
 
-    // The below line can be uncommented and adjusted if you provide the jar via /libs
-    implementation fg.deobf("blank:pokecube-aio-${version_pokecube}:jar")
+    // Here we import the version of pokecube to use. Note that the curseforge page is 'aoi' rather than 'aio'
+    implementation fg.deobf("curse.maven:pokecube-aoi-${version_pokecube}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

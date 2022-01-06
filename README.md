@@ -13,9 +13,10 @@ The instructions here which reference a `runSetup.bat` are intended for use with
 3. In eclipse, use file -> import -> Gradle -> Existing Gradle Project -> Next (Next again if it shows a welcome screen)
 4. Select the folder containing this file for Project Root Directory, then click finish
 5. Wait for things to run/import.
-6. In the gradle tasks tab, under forgegradle runs, run genEclipseRuns, wait for this to finish (you can watch it un Gradle Executions tab or Console)
-7. Select Run -> Debug Configurations -> Java Application -> runClient -> Debug
-8. It should now be running minecraft with pokecube installed
+6. In the gradle tasks tab, under forgegradle runs, run genEclipseRuns, wait for this to finish (you can watch it un Gradle Executions tab or Console) 
+7. Refresh the project to load in the runs.
+8. Select Run -> Debug Configurations -> Java Application -> runClient -> Debug
+9. It should now be running minecraft with pokecube installed
 
 To build the addon, select build->build in gradle tasks.
 If you update forge or the pokecube dependency, select ide->eclipse in gradle tasks.

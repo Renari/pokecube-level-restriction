@@ -119,8 +119,6 @@ public class PokecubeLevelRestriction
                 PokecubePlayerDataHandler.getCustomDataTag(player).putInt(HIGHEST_LEVEL_KEY, evt.newLevel);
                 PokecubePlayerDataHandler.saveCustomData(player);
             }
-
-            CONFIG_SPEC.
         }
     }
 

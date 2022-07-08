@@ -39,11 +39,9 @@ public class PokecubeLevelRestriction
         {
             builder.push("Pokecube Level Restriction");
             this.maxLevelCatch = builder.comment("How many levels higher before you will no longer be able to catch pokemob?")
-                    .worldRestart()
                     .defineInRange("Max Catch Level", defaultMaxLevelCatch, 0, 99);
             this.catchRateLossPerLevel = builder.comment("For every level higher than your max level how much harder does it become to catch? " +
                             "The default makes it 10% less likely to catch per level, so a pokemob 10 levels higher is impossible to catch.")
-                    .worldRestart()
                     .defineInRange("Short but readable name 2", defaultCatchRateLossPerLevel, 1, 100);
             builder.pop();
         }
@@ -69,7 +67,7 @@ public class PokecubeLevelRestriction
         MinecraftForge.EVENT_BUS.register(this);
         PokecubeCore.POKEMOB_BUS.register(this);
         // register our config
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CONFIG_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, CONFIG_SPEC);
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent

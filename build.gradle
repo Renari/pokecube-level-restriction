@@ -74,6 +74,10 @@ minecraft {
 }
 
 repositories {
+    // jei
+    maven {
+        url = "https://dvs1.progwml6.com/files/maven"
+    }
     maven {
         url "https://cursemaven.com"
         content {
@@ -90,6 +94,10 @@ dependencies {
 
     // Here we import the version of pokecube to use. Note that the curseforge page is 'aoi' rather than 'aio'
     implementation fg.deobf("curse.maven:pokecube-aoi-${version_pokecube}")
+
+
+    runtimeOnly fg.deobf("mezz.jei:jei-1.18:9.0.0.40")
+    runtimeOnly fg.deobf("curse.maven:configured-457570:3640884")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

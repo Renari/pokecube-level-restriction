@@ -89,8 +89,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${version_minecraft}-${version_forge}"
 
-    // Here we import the version of pokecube to use. Note that the curseforge page is 'aoi' rather than 'aio'
-    implementation fg.deobf("curse.maven:pokecube-aoi-${version_pokecube}")
+    // Here we import the version of pokecube to use.
+    implementation fg.deobf("curse.maven:pokecube-aio-${version_pokecube}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

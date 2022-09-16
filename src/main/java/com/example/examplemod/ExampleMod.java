@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.example.examplemod.exampleabilities.AbilityRegister;
+
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,6 +37,13 @@ public class ExampleMod
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        
+        // If we have abilities to register, call this init in the constructor
+        // of the mod! Also ensure you call it for yours, and don't import say
+        // pokecube.mobs's one instead. 
+        // IF YOU DO NOT WANT TO ADD ABILITIES, YOU SHOULD PROBABLY REMOVE THIS!
+        AbilityRegister.init();
+        
     }
 
     private void setup(final FMLCommonSetupEvent event)

@@ -1,21 +1,21 @@
 package com.arimil.pokecubelevelrestriction;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.Util;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pokecube.core.PokecubeCore;
-import pokecube.core.events.StarterEvent;
-import pokecube.core.events.pokemob.CaptureEvent;
-import pokecube.core.events.pokemob.LevelUpEvent;
+import pokecube.api.PokecubeAPI;
+import pokecube.api.events.StarterEvent;
+import pokecube.api.events.pokemobs.CaptureEvent;
+import pokecube.api.events.pokemobs.LevelUpEvent;
 import pokecube.core.handlers.PokecubePlayerDataHandler;
-import pokecube.core.items.pokecubes.EntityPokecube;
 
 import java.util.Random;
 
@@ -32,11 +32,11 @@ public class PokecubeLevelRestriction
     public PokecubeLevelRestriction() {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-        PokecubeCore.POKEMOB_BUS.register(this);
+        PokecubeAPI.POKEMOB_BUS.register(this);
         // register our config
         Config.register();
     }
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
+
     @SubscribeEvent
     public void onServerStarting(final ServerStartingEvent event) {
         // do something when the server starts
@@ -48,7 +48,7 @@ public class PokecubeLevelRestriction
         // event can't be canceled?
         if (!evt.isCancelable()) return;
 
-        final Entity catcher = ((EntityPokecube) evt.pokecube).shootingEntity;
+        final Entity catcher = evt.pokecube.shootingEntity;
         if (catcher instanceof final Player player) {
             int maxLevelOwned = PokecubePlayerDataHandler.getCustomDataTag(player).getInt(HIGHEST_LEVEL_KEY);
             int levelDifference = evt.getCaught().getLevel() - maxLevelOwned;
@@ -60,7 +60,13 @@ public class PokecubeLevelRestriction
             boolean failed = failRate > RANDOM.nextFloat();
 
             if (failed) {
-                player.sendMessage(new TextComponent("They seem too strong to capture, they broke out!!!"), Util.NIL_UUID);
+                TranslatableComponent pokemobName = (TranslatableComponent) evt.mob.getDisplayName();
+
+                player.sendMessage(
+                        new TranslatableComponent(
+                                "message.pokecubelevelrestriction.failure",
+                                pokemobName.withStyle(ChatFormatting.RED)),
+                        Util.NIL_UUID);
                 evt.pokecube.kill();
                 evt.setCanceled(true);
             }
@@ -69,7 +75,7 @@ public class PokecubeLevelRestriction
 
     @SubscribeEvent
     public void captureEvent(CaptureEvent.Post evt) {
-        final Entity catcher = ((EntityPokecube) evt.pokecube).shootingEntity;
+        final Entity catcher = evt.pokecube.shootingEntity;
         if (catcher instanceof final Player player) {
             final int level = evt.getCaught().getLevel();
             if (level > PokecubePlayerDataHandler.getCustomDataTag(player).getInt(HIGHEST_LEVEL_KEY)) {

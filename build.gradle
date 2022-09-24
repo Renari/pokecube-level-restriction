@@ -95,8 +95,8 @@ dependencies {
     // Here we import the version of pokecube to use.
     implementation fg.deobf("curse.maven:pokecube-aio-${version_pokecube}")
 
-    runtimeOnly fg.deobf("mezz.jei:jei-1.18:9.0.0.40")
-    runtimeOnly fg.deobf("curse.maven:configured-457570:3640884")
+    runtimeOnly fg.deobf("mezz.jei:jei-${version_jei}")
+    runtimeOnly fg.deobf("curse.maven:configured-${version_configured}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

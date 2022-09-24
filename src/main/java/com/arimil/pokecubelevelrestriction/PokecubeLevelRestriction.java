@@ -1,10 +1,10 @@
 package com.arimil.pokecubelevelrestriction;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.Util;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -60,13 +60,12 @@ public class PokecubeLevelRestriction
             boolean failed = failRate > RANDOM.nextFloat();
 
             if (failed) {
-                TranslatableComponent pokemobName = (TranslatableComponent) evt.mob.getDisplayName();
+                MutableComponent pokemobName = (MutableComponent) evt.mob.getDisplayName();
 
-                player.sendMessage(
-                        new TranslatableComponent(
+                player.sendSystemMessage(
+                        Component.translatable(
                                 "message.pokecubelevelrestriction.failure",
-                                pokemobName.withStyle(ChatFormatting.RED)),
-                        Util.NIL_UUID);
+                                pokemobName.withStyle(ChatFormatting.RED)));
                 evt.pokecube.kill();
                 evt.setCanceled(true);
             }

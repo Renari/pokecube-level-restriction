@@ -92,9 +92,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${version_minecraft}-${version_forge}"
 
-    // Here we import the version of pokecube to use. Note that the curseforge page is 'aoi' rather than 'aio'
-    implementation fg.deobf("curse.maven:pokecube-aoi-${version_pokecube}")
-
+    // Here we import the version of pokecube to use.
+    implementation fg.deobf("curse.maven:pokecube-aio-${version_pokecube}")
 
     runtimeOnly fg.deobf("mezz.jei:jei-1.18:9.0.0.40")
     runtimeOnly fg.deobf("curse.maven:configured-457570:3640884")

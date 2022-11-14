@@ -15,8 +15,8 @@ import pokecube.api.data.abilities.AbilityManager;
  * The sub-packages here are not necessary, and are merely here for
  * organisation.
  * 
- * The actual class name is what gets converted to the ability name when
- * registred this way.
+ * The @AbilityProvider annotation is then used to determine the name of the
+ * ability to register.
  * 
  * @author Thutmose
  *

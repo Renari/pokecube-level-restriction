@@ -4,18 +4,19 @@ import java.util.Arrays;
 
 import pokecube.api.PokecubeAPI;
 import pokecube.api.data.abilities.Ability;
+import pokecube.api.data.abilities.AbilityProvider;
 import pokecube.api.entity.pokemob.IPokemob;
 
 /**
- * This ability will be registered as "examplecomplex", note that this means it
- * will match any of the following:
+ * This ability will be registered as "example-complex"
  * 
- * "Example Complex Ability", "examplecomplexability",
- * "example_complex_ability", etc
+ * The singlton=false defines this as a non-singleton ability, so it will be a
+ * unique instance per pokemob that has it.
  * 
  * @author Thutmose
  *
  */
+@AbilityProvider(name = "example-complex", singleton = false)
 public class ExampleComplexAbility extends Ability
 {
     Object[] loaded_args;

@@ -2,8 +2,10 @@ package com.example.examplemod.exampleabilities.simple;
 
 import pokecube.api.PokecubeAPI;
 import pokecube.api.data.abilities.Ability;
+import pokecube.api.data.abilities.AbilityProvider;
 import pokecube.api.entity.pokemob.IPokemob;
 
+@AbilityProvider(name = "example-simple")
 public class ExampleSimpleAbility extends Ability
 {
     @Override

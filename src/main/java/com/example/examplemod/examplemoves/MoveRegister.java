@@ -8,9 +8,9 @@ import pokecube.core.moves.implementations.MovesAdder;
  * actions define custom logic for the moves when they are used on blocks, item,
  * etc.
  * 
- * This scans for classes that extend pokecube.core.moves.templates.Move_Basic
- * to register as attacks, and classes that implement
- * pokecube.api.moves.IMoveAction to register as move actions.
+ * This scans for classes with the @MoveProvider annotation, and attempts to use
+ * them to modify loaded moves. Moves must first be provided via a datapack
+ * entry.
  * 
  * There are some additional classes which extend Move_Basic in
  * pokecube.core.moves.templates, which may be useful for your attack class to
@@ -23,6 +23,7 @@ public class MoveRegister
 {
     public static void init()
     {
-        MovesAdder.packages.add(MoveRegister.class.getPackage());
+        MovesAdder.worldActionPackages.add(MoveRegister.class.getPackage());
+        MovesAdder.moveRegistryPackages.add(MoveRegister.class.getPackage());
     }
 }

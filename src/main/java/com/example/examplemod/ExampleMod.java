@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.example.examplemod.exampleabilities.AbilityRegister;
+import com.example.examplemod.examplemoves.MoveRegister;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -43,6 +44,10 @@ public class ExampleMod
         // pokecube.mobs's one instead. 
         // IF YOU DO NOT WANT TO ADD ABILITIES, YOU SHOULD PROBABLY REMOVE THIS!
         AbilityRegister.init();
+        
+        // Here we init our move register.
+        // IF YOU DO NOT WANT TO ADD MOVES, YOU SHOULD PROBABLY REMOVE THIS!
+        MoveRegister.init();
         
     }
 

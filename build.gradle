@@ -129,3 +129,9 @@ def cleanTOML()
 {
     delete "./build/resources/main/META-INF/mods.toml" 
 }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}

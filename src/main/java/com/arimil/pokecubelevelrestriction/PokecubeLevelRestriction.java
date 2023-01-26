@@ -63,11 +63,15 @@ public class PokecubeLevelRestriction
 
             if (failed) {
                 MutableComponent pokemobName = (MutableComponent) evt.mob.getDisplayName();
+                MutableComponent pokecubeName = (MutableComponent) evt.pokecube.getItem().getDisplayName();
 
                 player.sendSystemMessage(
                         Component.translatable(
                                 "message.pokecubelevelrestriction.failure",
-                                pokemobName.withStyle(ChatFormatting.RED)));
+                                pokemobName.withStyle(ChatFormatting.RED),
+                                pokecubeName.withStyle(ChatFormatting.AQUA)
+                        )
+                );
                 evt.pokecube.kill();
                 evt.setCanceled(true);
             }

@@ -47,6 +47,8 @@ public class PokecubeLevelRestriction
     public void canCapture(CaptureEvent.Pre evt) {
         // event can't be canceled?
         if (!evt.isCancelable()) return;
+        // snag ball returns null for getCaught for vanilla mobs
+        if (evt.getCaught() == null) return;
 
         final Entity catcher = evt.pokecube.shootingEntity;
         if (catcher instanceof final Player player) {

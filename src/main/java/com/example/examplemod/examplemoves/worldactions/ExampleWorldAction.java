@@ -19,7 +19,7 @@ public class ExampleWorldAction implements IMoveWorldEffect
     public boolean applyOutOfCombat(IPokemob user, Vector3 location)
     {
         // We shall place a diamond block here.
-        Level level = user.getEntity().getLevel();
+        Level level = user.getEntity().level();
         return level.setBlockAndUpdate(location.getPos(), Blocks.DIAMOND_BLOCK.defaultBlockState());
     }
 
@@ -27,7 +27,7 @@ public class ExampleWorldAction implements IMoveWorldEffect
     public boolean applyInCombat(IPokemob user, Vector3 location)
     {
         // We shall place a emerald block here.
-        Level level = user.getEntity().getLevel();
+        Level level = user.getEntity().level();
         return level.setBlockAndUpdate(location.getPos(), Blocks.EMERALD_BLOCK.defaultBlockState());
     }
 

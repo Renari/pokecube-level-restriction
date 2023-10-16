@@ -91,7 +91,7 @@ dependencies {
     implementation fg.deobf("curse.maven:pokecube-aio-${version_pokecube}")
 
     runtimeOnly fg.deobf("mezz.jei:jei-${version_jei}")
-    runtimeOnly fg.deobf("curse.maven:configured-${version_configured}")
+    runtimeOnly fg.deobf("curse.maven:catalogue-${version_catalogue}")
 }
 
 processResources.doLast {

@@ -25,3 +25,5 @@ license="All rights reserved"
     versionRange="version_pokecube"
     ordering="NONE"
     side="BOTH"
+[modproperties.pokecubelevelrestriction]
+    catalogueImageIcon="plr-icon.png"
